@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TheShortWayASPCore2ToDo.Data;
 using TheShortWayASPCore2ToDo.Models;
 using TheShortWayASPCore2ToDo.Services;
+using Humanizer;
 
 namespace TheShortWayASPCore2ToDo
 {
@@ -28,6 +29,9 @@ namespace TheShortWayASPCore2ToDo
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<ToDoContext>(options =>
+              options.UseSqlite("Data Source = ToDO.db"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -61,7 +65,7 @@ namespace TheShortWayASPCore2ToDo
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=ToDo}/{action=Index}/{id?}");
             });
         }
     }
